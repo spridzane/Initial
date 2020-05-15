@@ -36,11 +36,9 @@ public class GetOne {
 		// (If count of iterations is the same for several numbers, return
 		// smallest number).
 		
-		for(int i = 1; i <= maxNumber; i++) {
-			
-		}
-		
+
 		return 0;
 	}
+
 
 }
