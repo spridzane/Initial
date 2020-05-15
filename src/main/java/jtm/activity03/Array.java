@@ -14,16 +14,28 @@ public class Array {
 		// parameters from String to int
 		// Hint: use Arrays.sort(...) from
 		// https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html
+		
+		array = new int[args.length];
+		
+		for(int i = 0; i < args.length; i++) {
+			array[i] = Integer.parseInt(args[i]);
+		}
+		
+		Arrays.sort(array);
+		
 	}
 
 	public static void printSortedArray() {
 		// TODO print content of array on standard output
 		// Hint: use Arrays.toString(array) method for this
+		
+		System.out.println(Arrays.toString(array));
+		
 	}
 
 	public static int[] returnSortedArray() {
 		// TODO return reference to this array
-		return null;
+		return array;
 	}
 
 }
