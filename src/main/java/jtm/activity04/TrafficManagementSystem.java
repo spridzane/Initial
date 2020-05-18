@@ -29,12 +29,7 @@ public class TrafficManagementSystem {
 	public static void setVehicle(Transport transport, int i) {
 		// TODO set passed transport into transports array cell of passed index
 		
-		for (int j = 0; j<transports.length; j++){
-			
-			if (j == i) {
-				transports[j] = transport;
-		}
-	}
+		transports[i] = transport;
 	}
 	public static void addRoads(int i) {
 		// TODO create new array of roads in size of passed value
@@ -48,11 +43,7 @@ public class TrafficManagementSystem {
 
 	public static void setRoad(Road road, int i) {
 		// TODO set passed road into passed cell of roads array
-		for (int j = 0; j < roads.length; j++) {
-			if(j==i) {
-				roads[j] = road;
-			}
-		}
+		roads[i] = road;
 
 	}
 

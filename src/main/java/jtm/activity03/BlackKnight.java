@@ -39,14 +39,11 @@ public class BlackKnight {
 		// 3. put reference of this knight into next free cell of knights static
 		// array
 		knights[totalKnights] = this;
-		
-		
+
 		// 4. increase number of total and alive knights of static counters
 		totalKnights++;
 		aliveKnights++;
-		
-		
-		
+
 		// HINT: use "this.name" to access name of knight which otherwise is shadowed
 		// by parameter of constructor, which is also called "name"
 	}
@@ -56,15 +53,15 @@ public class BlackKnight {
 		// If knight is dead, return "Only chicken beats dead!"
 		// If knight has some arms, cut one off and return "Bugger!"
 		// Else return just "Haah!"
-		if(alive == false) {
+		if(!alive) {
 			return "Only chicken beats dead!"; 
 		}else if(arms>0){
 			arms--;
 			return "Bugger!";
-		}
+		}else {
 		return "Haah!";
 	}
-
+	}
 	public String cutOffLeg() {
 		// TODO handle cutting off legs knight's legs in following way:
 		// If knight is dead, return "Only chicken beats dead!"
@@ -75,11 +72,10 @@ public class BlackKnight {
 		}else if(legs>0){
 			legs--;
 			return "Bollocks!";
-			
-		}
+		}else {
 		return "Haah!";
 	}
-
+	}
 	public String cutOffHead() {
 		// TODO handle cutting off knight's head in following way:
 		// If knight is dead, return "Only chicken beats dead!"
@@ -116,4 +112,16 @@ public class BlackKnight {
 		
 	}
 
+//	private String aliveKnights() {
+//		StringBuilder tmp = new StringBuilder("");
+//		String delim = "";
+//		for(int i = 0; i < knights.length; i++) {
+//			if(knigth.alive) {
+//				
+//			}
+//		}
+//		return "";
+//		
+//	}
+	
 }
