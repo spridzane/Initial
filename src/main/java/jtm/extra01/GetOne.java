@@ -36,17 +36,10 @@ public class GetOne {
 		// (If count of iterations is the same for several numbers, return
 		// smallest number).
 		
-<<<<<<< HEAD
-		
 
-		return 0;
-		
-	}
-=======
 
 		return 0;
 	}
 
->>>>>>> branch 'master' of https://github.com/spridzane/Initial
 
 }
