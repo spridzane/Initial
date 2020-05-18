@@ -15,6 +15,7 @@ public class LetsRide {
 		// TODO #1: Set passed values to LetsRide object
 		this.busStopCount = busStopCount;
 		this.seatsCount = seatsCount;
+
 		
 	}
 
@@ -25,10 +26,9 @@ public class LetsRide {
 		// passenger count will be increased by 1, in stop No.2 it
 		// will be increased by 2 and so on until bus reaches route end.
 		// Note: Overall passenger count can't exceed seat count
-		while(seatsCount == passengersCount) {
-			
-		}
 		
+		
+
 		
 		return passengersCount;
 	}
@@ -37,12 +37,17 @@ public class LetsRide {
 		int freeSeats = 0;
 		// TODO #3: Calculate how much seats are free in bus
 		
+		freeSeats = seatsCount - passengersCount;
+		
 		return freeSeats;
 	}
 
 	public boolean isFull() {
 		boolean status = false;
 		// TODO #4: Check if bus is full.
+		if(seatsCount == passengersCount) {
+			status = true;
+		}
 		return status;
 	}
 

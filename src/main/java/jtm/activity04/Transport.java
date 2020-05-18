@@ -21,7 +21,7 @@ public class Transport {
 		this.id = id;
 		this.consumption = consumption;
 		this.tankSize = tankSize;
-		this.fuelInTank = (float) tankSize;
+		this.fuelInTank = tankSize;
 	}
 
 	/*- TODO #2
@@ -98,10 +98,10 @@ public class Transport {
 		// necessary amount and return String in form:
 		// "AAA Type is moving on From–To, 180km"
 		
-		float cons = road.getDistance() * this.consumption / 100;
-		if(this.fuelInTank >= cons) {
+		float cons = road.getDistance() * consumption / 100;
+		if(fuelInTank >= cons) {
 			
-			this.fuelInTank = this.fuelInTank - cons;
+			fuelInTank = fuelInTank - cons;
 			return this.getType() + " is moving on " + road.toString();
 			
 			// TODO If there is no enough fuel in tank, return string in form:
@@ -114,7 +114,6 @@ public class Transport {
 			String.format(Locale.US, "%.2f", cons) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
 			
 		}
-		
 		
 	}
 
