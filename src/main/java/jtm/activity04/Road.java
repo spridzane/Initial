@@ -13,7 +13,7 @@ public class Road {
 	 */
 	
 	public Road(String from, String to, int distance) {
-		super();
+
 		this.from = from;
 		this.to = to;
 		this.distance = distance;
@@ -25,9 +25,23 @@ public class Road {
 	 */
 	
 	public Road() {
-		super();
+
 	}
 	
+	/*- TODO #4
+	 * Select menu: Source — Generate toString()...
+	 * and implement this method, that it returns String in form:
+	 * "From — To, 00km",
+	 * where "From" is actual from point, "To" — actual to point and
+	 * 00 is actual length of the road
+	 * Note that — is not dash ("minus key" in jargon), but m-dash!
+	 * See more at: https://en.wikipedia.org/wiki/Dash
+	 */
+	
+	@Override
+	public String toString() {
+		return from + " " + '\u2014' + " " + to + ", " + distance + "km";
+	}
 
 	/*- TODO #3
 	 * Select menu: Source — Generate getters and Setters...
@@ -64,19 +78,5 @@ public class Road {
 		this.distance = distance;
 	}
 
-	/*- TODO #4
-	 * Select menu: Source — Generate toString()...
-	 * and implement this method, that it returns String in form:
-	 * "From — To, 00km",
-	 * where "From" is actual from point, "To" — actual to point and
-	 * 00 is actual length of the road
-	 * Note that — is not dash ("minus key" in jargon), but m-dash!
-	 * See more at: https://en.wikipedia.org/wiki/Dash
-	 */
-
-	@Override
-	public String toString() {
-		return from + " " + '\u2014' + " " + to + ", " + distance + "km";
-	}
 
 }

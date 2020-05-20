@@ -29,6 +29,60 @@ public class Transport {
 		this.id = id;
 	}
 
+	/*- TODO #3
+	 * Select menu: Source — Generate toString()...
+	 * and implement this method, that returns String in form:
+	 * "Id:ID cons:0.0l/100km, tank:00l, fuel:00.00l"
+	 * where ID and numbers are actual properties of the transport
+	 * HINT: use String.format(Locale.US, "%.2f", float) to limit shown digits
+	 * to 2 decimal for fractions, and dot as a decimal delimiter.
+	 */
+
+	@Override
+	public String toString() {
+
+		return "Id:" + id + " cons:" + consumption + "l/100km, tank:" + 
+		tankSize + "l, fuel:" + String.format(Locale.US, "%.2f",fuelInTank) + "l";	
+		
+	}
+	
+	// Return transport id and type as string e.g. "AAA Transport"
+//	 HINT: use this.getClass().getSimpleName(); to get type of transport
+	
+	
+	protected final String getType() {
+
+		// TODO return required value
+		return getId() + " " + this.getClass().getSimpleName();
+	}
+
+	// HINT: use getType() to describe transport and road.toString() to describe
+	// road
+	// HINT: String.format(Locale.US, "%.2f", float) to format float number with
+	// fixed mask
+	public String move(Road road) {
+		// TODO If transport has enough fuel, decrease actual amount of fuel by
+		// necessary amount and return String in form:
+		// "AAA Type is moving on From–To, 180km"
+		
+		float fuelNeeded = road.getDistance() * consumption / 100;
+		if(fuelInTank >= fuelNeeded) {
+			
+			fuelInTank = fuelInTank - fuelNeeded;
+			return this.getType() + " is moving on " + road;
+			
+			// TODO If there is no enough fuel in tank, return string in form:
+			// "Cannot move on From–To, 180km. Necessary
+			// fuel:0.00l, fuel in tank:0.00l"
+			
+		}else {
+			
+			return "Cannot move on " + road.toString() + ". Necessary fuel:" + 
+			String.format(Locale.US, "%.2f", fuelNeeded) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
+			
+		}
+		
+}
 	/*- TODO #2
 	 * Select menu: Source — Generate getters and Setters...
 	 * and generate public getters for consumption, tankSize, id, and
@@ -65,60 +119,5 @@ public class Transport {
 	public void setFuelInTank(float fuelInTank) {
 		this.fuelInTank = fuelInTank;
 	}
-	
 
-	/*- TODO #3
-	 * Select menu: Source — Generate toString()...
-	 * and implement this method, that returns String in form:
-	 * "Id:ID cons:0.0l/100km, tank:00l, fuel:00.00l"
-	 * where ID and numbers are actual properties of the transport
-	 * HINT: use String.format(Locale.US, "%.2f", float) to limit shown digits
-	 * to 2 decimal for fractions, and dot as a decimal delimiter.
-	 */
-
-	@Override
-	public String toString() {
-
-		return "Id:" + id + " cons:" + String.format(Locale.US, "%.1f",consumption) + "l/100km, tank:" + 
-		tankSize + "l, fuel:" + String.format(Locale.US, "%.2f",fuelInTank) + "l";	
-		
-	}
-	
-	// Return transport id and type as string e.g. "AAA Transport"
-//	 HINT: use this.getClass().getSimpleName(); to get type of transport
-	
-	
-	protected final String getType() {
-
-		// TODO return required value
-		return getId() + " " + this.getClass().getSimpleName();
-	}
-
-	// HINT: use getType() to describe transport and road.toString() to describe
-	// road
-	// HINT: String.format(Locale.US, "%.2f", float) to format float number with
-	// fixed mask
-	public String move(Road road) {
-		// TODO If transport has enough fuel, decrease actual amount of fuel by
-		// necessary amount and return String in form:
-		// "AAA Type is moving on From–To, 180km"
-		
-		float cons = road.getDistance() * consumption / 100;
-		if(fuelInTank >= cons) {
-			
-			fuelInTank = fuelInTank - cons;
-			return this.getType() + " is moving on " + road.toString();
-			
-			// TODO If there is no enough fuel in tank, return string in form:
-			// "Cannot move on From–To, 180km. Necessary
-			// fuel:0.00l, fuel in tank:0.00l"
-			
-		}else {
-			
-			return "Cannot move on " + road.toString() + ". Necessary fuel:" + 
-			String.format(Locale.US, "%.2f", cons) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
-			
-		}
-		
-}
 }
