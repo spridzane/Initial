@@ -86,10 +86,12 @@ public class BlackKnight {
 		// Where "Arthur, Cnut" are names of still alive knights
 		// Else return "You'l burn in hell forever!"
 		
-		String knightNames = "";
+//		String knightNames = "";
 		if(!alive) {
 			return "Only chicken beats dead!";
-		}else if(head == 1) {
+		}
+			
+		if(head == 1) {
 			head--;
 			alive = false;
 			aliveKnights--;
@@ -97,31 +99,23 @@ public class BlackKnight {
 			}
 			
 		if(aliveKnights>0) {
-			for(BlackKnight knight : knights){
-                  if(knight.alive){
-                        knightNames += knight.name + ", ";
-                    }
-                }
-			
-			String knightNamesNew = knightNames.substring(0, knightNames.length()-2);
-			
-				return "You'l newer win! " + knightNamesNew + " will still fight!";
+				return "You'l newer win! " + aliveKnights() + " will still fight!";
 			}else {
 				return "You'l burn in hell forever!";
 			}
 		
 	}
 
-//	private String aliveKnights() {
-//		StringBuilder tmp = new StringBuilder("");
-//		String delim = "";
-//		for(int i = 0; i < knights.length; i++) {
-//			if(knigth.alive) {
-//				
-//			}
-//		}
-//		return "";
-//		
-//	}
+	private String aliveKnights() {
+		StringBuilder tmp = new StringBuilder("");
+		String delim = "";
+		for(int i = 0; i < knights.length; i++) {
+			if(knights[i].alive) {
+				tmp.append(delim + knights[i].name); 
+				delim = ", ";
+			}
+		}		
+		return tmp.toString();
+	}
 	
 }

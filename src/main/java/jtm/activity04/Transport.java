@@ -24,6 +24,11 @@ public class Transport {
 		this.fuelInTank = tankSize;
 	}
 
+	public Transport(String id) {
+		// TODO Auto-generated constructor stub
+		this.id = id;
+	}
+
 	/*- TODO #2
 	 * Select menu: Source — Generate getters and Setters...
 	 * and generate public getters for consumption, tankSize, id, and

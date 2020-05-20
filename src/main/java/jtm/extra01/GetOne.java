@@ -35,9 +35,9 @@ public class GetOne {
 		// smallest number).
 		int longestPath = -1;
 		int holder;
-		int maxSteps = -1;
+	 	int maxSteps = -1;
 		
-		for(int i = 0; i <= maxNumber; i++) {
+		for(int i = 1; i <= maxNumber; i++) {
 			holder = this.iterations(i);
 			if(holder > maxSteps) {
 				maxSteps = holder;
