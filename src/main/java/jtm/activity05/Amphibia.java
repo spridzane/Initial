@@ -5,8 +5,9 @@ import jtm.activity04.Transport;
 
 public class Amphibia extends Transport{
 	
-	private byte sails;
+	private int sails;
 	private int wheels;
+	
 
 	public Amphibia(String id, float consumption, int tankSize, byte sails, int wheels) {
 		super(id, consumption, tankSize);

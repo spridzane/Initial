@@ -1,5 +1,6 @@
 package jtm.extra03;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PracticalNumbers {
@@ -8,7 +9,9 @@ public class PracticalNumbers {
 	// Implement method, which returns practical numbers in given range
 	// including
 	public String getPracticalNumbers(int from, int to) {
-		return "";
-	}
+		ArrayList<Integer> practicalNumbers = new ArrayList<Integer>();
 
+		
+		return practicalNumbers.toString();
+}
 }
