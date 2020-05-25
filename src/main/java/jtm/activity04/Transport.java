@@ -64,25 +64,26 @@ public class Transport {
 		// TODO If transport has enough fuel, decrease actual amount of fuel by
 		// necessary amount and return String in form:
 		// "AAA Type is moving on From–To, 180km"
-		
+
 		float fuelNeeded = road.getDistance() * consumption / 100;
-		if(fuelInTank >= fuelNeeded) {
-			
+		if (fuelInTank >= fuelNeeded) {
+
 			fuelInTank = fuelInTank - fuelNeeded;
 			return this.getType() + " is moving on " + road;
-			
+
 			// TODO If there is no enough fuel in tank, return string in form:
 			// "Cannot move on From–To, 180km. Necessary
 			// fuel:0.00l, fuel in tank:0.00l"
-			
-		}else {
-			
-			return "Cannot move on " + road.toString() + ". Necessary fuel:" + 
-			String.format(Locale.US, "%.2f", fuelNeeded) + "l, fuel in tank:" + String.format(Locale.US, "%.2f", fuelInTank) + "l";
-			
+
+		} else {
+
+			return "Cannot move on " + road.toString() + ". Necessary fuel:"
+					+ String.format(Locale.US, "%.2f", fuelNeeded) + "l, fuel in tank:"
+					+ String.format(Locale.US, "%.2f", fuelInTank) + "l";
+
 		}
-		
-}
+
+	}
 	/*- TODO #2
 	 * Select menu: Source — Generate getters and Setters...
 	 * and generate public getters for consumption, tankSize, id, and

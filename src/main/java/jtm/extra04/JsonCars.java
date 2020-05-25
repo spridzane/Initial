@@ -4,6 +4,10 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
 
 public class JsonCars {
 
@@ -11,13 +15,14 @@ public class JsonCars {
 	 * Implement method, which returns list of cars from generated JSON string
 	 */
 	public List<Car> getCars(String jsonString) {
+
 		/*- HINTS:
 		 * You will need to use:
 		 * - https://stleary.github.io/JSON-java/org/json/JSONObject.html
 		 * - https://stleary.github.io/JSON-java/org/json/JSONArray.html
 		 * You will need to initialize JSON array from "cars" key in JSON string
 		 */
-
+		
 		return null;
 	}
 
@@ -31,6 +36,7 @@ public class JsonCars {
 		 * - http://static.javadoc.io/org.json/json/20180130/index.html?org/json/JSONWriter.html
 		 * Remember to add "car" key as a single container for array of car objects in it.
 		 */
+		
 		return null;
 	}
 

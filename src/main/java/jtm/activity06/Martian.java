@@ -11,6 +11,25 @@ public class Martian implements Humanoid, Alien, Cloneable {
 		weight = Alien.BirthWeight;
 
 	}
+	
+	/*
+	 * Implementation of Object clone() method for Cloneable interface
+	 * @see https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
+	 */
+	@Override
+	    public Object clone() throws CloneNotSupportedException {
+	    return clone(this);
+	}
+
+	private Object clone(Object current) {
+	
+	    // TODO implement cloning of current object
+	    // and its stomach
+		
+		Object result = null;
+		
+		return current;
+	}
 
 	/*
 	 * If Alien is hungry (stomach is empty), eat Object. Possibly eaten
@@ -57,21 +76,7 @@ public class Martian implements Humanoid, Alien, Cloneable {
 		return weight;
 	}
 	
-	/*
-	 * Implementation of Object clone() method for Cloneable interface
-	 * @see https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
-	 */
-	@Override
-	    public Object clone() throws CloneNotSupportedException {
-	    return clone(this);
-	}
 
-	private Object clone(Object current) {
-	
-	    // TODO implement cloning of current object
-	    // and its stomach
-		return current;
-	}
 	
 	@Override
 	public String toString() {
