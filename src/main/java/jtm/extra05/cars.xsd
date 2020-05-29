@@ -24,8 +24,7 @@
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:attribute>
-						<!-- this is required string attribute of the car without any other 
-							requirements -->
+  							requirements -->
 						<xs:attribute name="notes" type="xs:string" use="required">
 						</xs:attribute>
 					</xs:complexType>

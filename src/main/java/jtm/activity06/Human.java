@@ -19,6 +19,7 @@ public class Human implements Humanoid {
 		if(stomach == 0) {
 			stomach += food;
 			weight += food;
+			
 		}
 	}
 	@Override
@@ -58,6 +59,11 @@ public class Human implements Humanoid {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + ": " + weight + " [" + stomach + "]";
+	}
+
+	public Object getStomach() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

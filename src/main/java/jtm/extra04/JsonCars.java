@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONWriter;
 
 
 
@@ -21,14 +23,22 @@ public class JsonCars {
 		 * - https://stleary.github.io/JSON-java/org/json/JSONObject.html
 		 * - https://stleary.github.io/JSON-java/org/json/JSONArray.html
 		 * You will need to initialize JSON array from "cars" key in JSON string
-		 */
+		 */	
 		
-		return null;
+		List<Car> cars = new ArrayList<>();
+		JSONObject jo = new JSONObject(jsonString);
+		JSONArray ja = jo.getJSONArray("cars");
+		for(int i=0; i < ja.length(); i++) {
+			JSONObject jsonObj = ja.getJSONObject(i);
+			Car data = new Car(jsonObj.getString("model"),jsonObj.getInt("year"),jsonObj.getString("color"),jsonObj.getFloat("price"));
+			cars.add(data);
+		}
+		
+		return cars;
+		
 	}
-
-	/*- TODO #2
-	 * Implement method, which returns JSON String generated from list of cars
-	 */
+		 /* Implement method, which returns JSON String generated from list of cars
+		 */
 	public String getJson(List<Car> cars) {
 		/*- HINTS:
 		 * You will need to use:
@@ -37,7 +47,22 @@ public class JsonCars {
 		 * Remember to add "car" key as a single container for array of car objects in it.
 		 */
 		
-		return null;
+		StringWriter sw = new StringWriter();
+		JSONWriter jw = new JSONWriter(sw);
+		try {
+			jw.object().key("cars").array();
+			for(Car car: cars) {
+				jw.object().key("model").value(car.getModel());
+				jw.key("year").value(car.getYear());
+				jw.key("color").value(car.getColor());
+				jw.key("price").value(car.getPrice());
+				jw.endObject();
+			}
+			jw.endArray();
+		}catch(JSONException e) {	
+		}
+		jw.endObject();
+		return sw.toString();
 	}
 
 }

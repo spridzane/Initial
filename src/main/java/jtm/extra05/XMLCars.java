@@ -6,10 +6,10 @@ package jtm.extra05;
 
 public class XMLCars {
 
+
 	/*- TODO #2
 	 * Declare static variables to remember previously generated structure of XML
 	 */
-
 
 	public void addCar(int id, String model, String color, int year, float price, String notes) throws Exception {
 		// TODO #3
@@ -29,10 +29,10 @@ public class XMLCars {
 		 *           https://docs.oracle.com/javase/7/docs/api/org/w3c/dom/package-summary.html
 		 */
 
-
 	}
 
 	public String getXML() throws Exception {
+
 		/*- TODO No. 4: Write a code that will create String containing XML as that matches car.xsd requirements.
 		 * 
 		 * HINT look at:
@@ -44,7 +44,9 @@ public class XMLCars {
 		 * HINT: look at:
 		 * https://docs.oracle.com/javase/7/docs/api/javax/xml/transform/Transformer.html
 		 */
-		return "";
+
+		return null;
+
 
 	}
 
