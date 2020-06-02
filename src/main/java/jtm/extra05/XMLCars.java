@@ -1,6 +1,13 @@
 
 package jtm.extra05;
 
+import javax.validation.Validator;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.SchemaFactory;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Schema;
+import com.sun.xml.internal.fastinfoset.stax.events.XMLConstants;
+
 // TODO #1
 // Import necessary classes from javax.xml.* and, if necessary org.w3c.dom.*
 
@@ -63,7 +70,19 @@ public class XMLCars {
 		 * HINT:
 		 * Use https://docs.oracle.com/javase/7/docs/api/javax/xml/validation/Validator.html
 		 */
-		return false;
+		try
+	    {
+	        SchemaFactory factory = 
+	            SchemaFactory.newInstance(XMLConstants.XMLVERSION);
+	        Schema schema = (Schema) factory.newSchema(new StreamSource(schemaSource));
+	        javax.xml.validation.Validator validator = ((javax.xml.validation.Schema) schema).newValidator();
+	        validator.validate(new StreamSource(xmlSource));
+	        return true;
+	    }
+	    catch(Exception ex)
+	    {
+	        return false;
+	    }
 	}
 
 }
