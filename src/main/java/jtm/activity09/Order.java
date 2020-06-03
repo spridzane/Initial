@@ -42,59 +42,74 @@ public class Order implements Comparable<Order> {
 	}
 
 	@Override
-	public int compareTo(Order o) {
+	public int compareTo(Order item) {
 
-		if (!this.name.equals(o.name)) {
-			if (this.name.compareTo(o.name) > 0) {
-				return 1;
-			} else if (this.name.compareTo(o.name) < 0) {
-				return -1;
+//		if (!this.name.equals(item.name)) {
+//			if (this.name.compareTo(item.name) > 0) {
+//				return 1;
+//			} else if (this.name.compareTo(item.name) < 0) {
+//				return -1;
+//			}
+//		}
+//
+//		if (!this.customer.equals(item.customer)) {
+//			if (this.customer.compareTo(item.customer) > 0) {
+//				return 1;
+//			} else if (this.customer.compareTo(item.customer) < 0) {
+//				return -1;
+//			}
+//		}
+//
+//		if (this.count != item.count) {
+//			if (this.count > item.count) {
+//				return 1;
+//			} else if (this.count < item.count) {
+//				return -1;
+//			}
+//		}
+//
+//		return 0;
+//	}
+		int tmp = 0;
+		tmp = this.name.compareTo(item.name);
+		if (tmp == 0) {
+			tmp = this.customer.compareTo(item.customer);
+			if (tmp == 0) {
+				tmp = this.count - item.count;
 			}
 		}
-
-		if (!this.customer.equals(o.customer)) {
-			if (this.customer.compareTo(o.customer) > 0) {
-				return 1;
-			} else if (this.customer.compareTo(o.customer) < 0) {
-				return -1;
-			}
+		if (tmp < 0) {
+			tmp = -1;
 		}
-
-		if (this.count != o.count) {
-			if (this.count > o.count) {
-				return 1;
-			} else if (this.count < o.count) {
-				return -1;
-			}
+		if (tmp > 0) {
+			tmp = 1;
 		}
+		return tmp;
 
-		return 0;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		boolean result = false;
-		if (o != null && o instanceof Order) {
-			Order o1 = (Order) o;
-			if ((customer == o1.customer) && (name == o1.name) && (count == o1.count)) {
-				result = true;
-			}
+	public boolean equals(Object object) {
+		if (object instanceof Order) {
+			Order order = (Order) object;
+			if (this.compareTo(order) == 0)
+				return true;
 		}
-		return result;
-
+		return false;
 	}
+	
 
 	@Override
 	public int hashCode() {
 		// return name.hashCode() + customer.hashCode() + new Integer(count).hashCode();
-		return Objects.hash(customer, name, count);
+		return toString().hashCode();
 
-	}
+	} 
 
 	@Override
 	public String toString() {
 		// "ItemName: OrdererName: Count"
-		return "ItemName: " + name + " OrdererName: " + customer + " Count: " + count;
+		return name + ": " + customer + ": " + count;
 	}
 
 }

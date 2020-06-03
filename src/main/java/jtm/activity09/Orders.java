@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -67,8 +68,29 @@ public class Orders implements Iterator<Order> {
 	}
 
 	public Set<Order> getItemsSet() {
-		Set<Order> orderSet = new HashSet<>(orders);
-		return orderSet;
+		Set<Order> orderSet = new LinkedHashSet<Order>();
+		Order prevOrder = null;
+		sort();
+		for(Order order : orders) {
+			if(prevOrder == null) {
+				prevOrder = order;
+				continue;
+			}
+			if(order.name.equals(prevOrder.name)) {
+				prevOrder.count += order.count;
+				prevOrder.customer += "," + order.customer;
+			}else {
+				orderSet.add(prevOrder);
+				prevOrder = order;
+			}
+		}
+		
+		if (prevOrder != null) {
+			orderSet.add(prevOrder);
+		}
+		
+		//To make set sorted, create new one from existing one
+		return new LinkedHashSet<Order>(orderSet);
 	}
 
 	public void sort() {
