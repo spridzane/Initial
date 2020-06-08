@@ -1,22 +1,46 @@
 
 package jtm.extra05;
 
-import javax.validation.Validator;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Schema;
-import com.sun.xml.internal.fastinfoset.stax.events.XMLConstants;
+import org.w3c.dom.*;
 
-// TODO #1
+import java.io.StringReader;
+import java.io.StringWriter;
+
+//  #1
 // Import necessary classes from javax.xml.* and, if necessary org.w3c.dom.*
 
 public class XMLCars {
 
-
-	/*- TODO #2
-	 * Declare static variables to remember previously generated structure of XML
+	/*
+	 * #2 Declare static variables to remember previously generated structure of XML
 	 */
+	static final String schema = "http://www.w3.org/2001/XMLSchema";
+
+	static DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	static DocumentBuilder dBuilder;
+
+	static {
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	static Document doc = dBuilder.newDocument();
 
 	public void addCar(int id, String model, String color, int year, float price, String notes) throws Exception {
 		// TODO #3
@@ -36,24 +60,74 @@ public class XMLCars {
 		 *           https://docs.oracle.com/javase/7/docs/api/org/w3c/dom/package-summary.html
 		 */
 
+		// root elements
+		Element rootElement;
+
+		if (doc.hasChildNodes()) {
+			rootElement = doc.getDocumentElement();
+		} else {
+			rootElement = doc.createElement("cars");
+			doc.appendChild(rootElement);
+		}
+
+		Element car = doc.createElement("car");
+		rootElement.appendChild(car);
+
+		Attr attr = doc.createAttribute("id");
+		String id1 = String.format("%04d", id);
+		attr.setValue(id1);
+		car.setAttributeNode(attr);
+
+		Attr notesAttr = doc.createAttribute("notes");
+		notesAttr.setValue(notes);
+		car.setAttributeNode(notesAttr);
+
+		Element carModel = doc.createElement("model");
+		carModel.appendChild(doc.createTextNode(model));
+		car.appendChild(carModel);
+
+		Element carColor = doc.createElement("color");
+		carColor.appendChild(doc.createTextNode(color));
+		car.appendChild(carColor);
+
+		Element carYear = doc.createElement("year");
+		carYear.appendChild(doc.createTextNode(Integer.toString(year)));
+		car.appendChild(carYear);
+
+		Element carPrice = doc.createElement("price");
+		carPrice.appendChild(doc.createTextNode(Float.toString(price)));
+		car.appendChild(carPrice);
+
+		Comment comment = doc.createComment(notes);
+		car.appendChild(comment);
+
 	}
 
 	public String getXML() throws Exception {
 
-		/*- TODO No. 4: Write a code that will create String containing XML as that matches car.xsd requirements.
+		/*
+		 * No. 4: Write a code that will create String containing XML as that matches
+		 * car.xsd requirements.
 		 * 
 		 * HINT look at:
-		 * https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilder.html
+		 * https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilder.
+		 * html
 		 * 
-		 * Note, that XML should be "prettied" with line breaks and 
-		 * indentations of 2 spaces for internal elements
+		 * Note, that XML should be "prettied" with line breaks and indentations of 2
+		 * spaces for internal elements
 		 * 
 		 * HINT: look at:
-		 * https://docs.oracle.com/javase/7/docs/api/javax/xml/transform/Transformer.html
+		 * https://docs.oracle.com/javase/7/docs/api/javax/xml/transform/Transformer.
+		 * html
 		 */
 
-		return null;
-
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = tf.newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		StringWriter sw = new StringWriter();
+		transformer.transform(new DOMSource(doc), new StreamResult(sw));
+		return sw.toString();
 
 	}
 
@@ -65,24 +139,19 @@ public class XMLCars {
 	 *         (will be thrown by javax.xml.validation.Validator automatically)
 	 */
 	public static boolean validateXMLSchema(String schemaSource, String xmlSource) throws Exception {
-		/*- TODO No. 2: Write a code to validate prepared XML source according to schema source
+//		return false;
+
+		/*- No. 2: Write a code to validate prepared XML source according to schema source
 		 * Note that Exception should be thrown, if passed XML file is invalid.
 		 * HINT:
 		 * Use https://docs.oracle.com/javase/7/docs/api/javax/xml/validation/Validator.html
 		 */
-		try
-	    {
-	        SchemaFactory factory = 
-	            SchemaFactory.newInstance(XMLConstants.XMLVERSION);
-	        Schema schema = (Schema) factory.newSchema(new StreamSource(schemaSource));
-	        javax.xml.validation.Validator validator = ((javax.xml.validation.Schema) schema).newValidator();
-	        validator.validate(new StreamSource(xmlSource));
-	        return true;
-	    }
-	    catch(Exception ex)
-	    {
-	        return false;
-	    }
+		SchemaFactory factory = SchemaFactory.newInstance(schema);
+		Schema schema = factory.newSchema(new StreamSource(new StringReader(schemaSource)));
+		Validator validator = schema.newValidator();
+		validator.validate(new StreamSource(new StringReader(xmlSource)));
+
+		return true;
 	}
 
 }
