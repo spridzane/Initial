@@ -12,8 +12,8 @@ public class SimpleCalc {
 	public static int add(int a, int b) throws SimpleCalcException {
 		// TODO implement adding operation
 		validateInput(a, b);
-		validateOutput(a, b, "+");
-		return a + b;
+		
+		return validateOutput(a, b, "+");
 	}
 
 	// specify that method can throw SimpleCalcException
@@ -21,24 +21,24 @@ public class SimpleCalc {
 
 		// implement subtract operation
 		validateInput(a, b);
-		validateOutput(a, b, "-");
-		return a - b;
+		
+		return validateOutput(a, b, "-");
 	}
 
 	// specify that method can throw SimpleCalcException
 	public static int multiply(int a, int b) throws SimpleCalcException {
 		// implement multiply operation
 		validateInput(a, b);
-		validateOutput(a, b, "*");
-		return a * b;
+		
+		return validateOutput(a, b, "*");
 	}
 
 	// specify that method can throw SimpleCalcException
 	public static int divide(int a, int b) throws SimpleCalcException {
 		// implement divide operation
 		validateInput(a, b);
-		validateOutput(a, b, "/");
-		return a / b;
+		
+		return validateOutput(a, b, "/");
 	}
 
 	// Validate that inputs are in range of -10..+10 using assertions
@@ -98,18 +98,37 @@ public class SimpleCalc {
 	private static int validateOutput(int a, int b, String operation) throws SimpleCalcException {
 		int result = 0;
 
-		if (operation == "+") {
-			result = a + b;
-		} else if (operation == "-") {
-			result = a - b;
-		} else if (operation == "*") {
-			result = a * b;
-		} else if (operation == "/") {
-			try {
+//		if (operation == "+") {
+//			result = a + b;
+//		} else if (operation == "-") {
+//			result = a - b;
+//		} else if (operation == "*") {
+//			result = a * b;
+//		} else if (operation == "/") {
+//			try {
+//				result = a / b;
+//			} catch (ArithmeticException ae) {
+//				throw new SimpleCalcException("division by zero", ae);
+//			}
+//		}
+		
+		try {
+			switch(operation) {
+			case "+":
+				result = a + b;
+			break;
+			case "-":
+				result = a - b;
+			break;
+			case "*":
+				result = a * b;
+				break;
+			case "/":
 				result = a / b;
-			} catch (ArithmeticException ae) {
-				throw new SimpleCalcException("division by zero", ae);
+				break;
 			}
+		}catch(Exception e) {
+			throw new SimpleCalcException("division by zero", e);
 		}
 
 		if (result > 10) {
