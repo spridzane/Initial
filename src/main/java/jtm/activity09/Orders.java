@@ -50,17 +50,26 @@ import java.util.Set;
  */
 
 public class Orders implements Iterator<Order> {
+//	private List<Order> orders;
+//	private ListIterator<Order> iterator;
 	private List<Order> orders;
-	private ListIterator<Order> iterator;
+	private int currentOrder;
 
 	public Orders() {
-		orders = new LinkedList<>();
-		iterator = orders.listIterator();
+//		orders = new LinkedList<>();
+//		iterator = orders.listIterator();
+
+		orders = new LinkedList<Order>();
+		currentOrder = -1;
+
 	}
 
 	public void add(Order item) {
-		iterator.add(item);
-		iterator.previous();
+//		iterator.add(item);
+//		iterator.previous();
+
+		orders.add(item);
+
 	}
 
 	public List<Order> getItemsList() {
@@ -71,25 +80,25 @@ public class Orders implements Iterator<Order> {
 		Set<Order> orderSet = new LinkedHashSet<Order>();
 		Order prevOrder = null;
 		sort();
-		for(Order order : orders) {
-			if(prevOrder == null) {
+		for (Order order : orders) {
+			if (prevOrder == null) {
 				prevOrder = order;
 				continue;
 			}
-			if(order.name.equals(prevOrder.name)) {
+			if (order.name.equals(prevOrder.name)) {
 				prevOrder.count += order.count;
 				prevOrder.customer += "," + order.customer;
-			}else {
+			} else {
 				orderSet.add(prevOrder);
 				prevOrder = order;
 			}
 		}
-		
+
 		if (prevOrder != null) {
 			orderSet.add(prevOrder);
 		}
-		
-		//To make set sorted, create new one from existing one
+
+		// To make set sorted, create new one from existing one
 		return new LinkedHashSet<Order>(orderSet);
 	}
 
@@ -97,12 +106,46 @@ public class Orders implements Iterator<Order> {
 		Collections.sort(orders);
 	}
 
-	public void remove() {
-		try {
-		iterator.remove();
-		}catch(IllegalStateException e){
-			throw e;
+	@Override
+	public boolean hasNext() {
+//		return iterator.hasNext();
+		if (orders.size() > 0 && currentOrder < orders.size()) {
+			return true;
+		} else {
+			return false;
 		}
+	}
+
+	@Override
+	public Order next() {
+//		if(!iterator.hasNext()) {
+//			throw new NoSuchElementException();
+//		}else
+//		return iterator.next();
+
+		if (hasNext()) {
+			currentOrder++;
+			return orders.get(currentOrder);
+		} else {
+			throw new NoSuchElementException();
+		}
+
+	}
+
+	@Override
+	public void remove() {
+//		try {
+//		iterator.remove();
+//		}catch(IllegalStateException e){
+//			throw e;
+//		}
+
+		if (currentOrder >= 0 && currentOrder < orders.size()) {
+			orders.remove(currentOrder);
+		} else {
+			throw new IllegalStateException();
+		}
+
 	}
 
 	public String toString() {
@@ -110,18 +153,4 @@ public class Orders implements Iterator<Order> {
 
 	}
 
-	@Override
-	public boolean hasNext() {
-		return iterator.hasNext();
-	}
-
-	@Override
-	public Order next() {
-		if(!iterator.hasNext()) {
-			throw new NoSuchElementException();
-		}else
-		return iterator.next();
-	}
-	}
-
-
+}
