@@ -6,20 +6,35 @@ package jtm.extra06;
  */
 public enum Holiday {
 	NEW_YEAR(1, 1), WOMAN_DAY(3, 8), CHUCK_NORRIS_BIRTHSDAY(3, 10), FOOLS_DAY9(4, 1), WORLD_END(12, 21);
+
 	int month;
 	int day;
 
 	Holiday(int month, int day) {
-		// TODO #1 implement class variables for month and day of the holiday
+		// #1 implement class variables for month and day of the holiday
+		this.day = day;
+		this.month = month;
+
 	}
 
 	public static Holiday getNearest(int currentMonth, int currentDay) {
 		Holiday returnHoliday = null;
-		// TODO #2 implement method which will return the nearest holiday.
+		// #2 implement method which will return the nearest holiday.
 		// HINT: note, that holidays is arranged by date ascending, so if there
 		// are
 		// no more holidays this year, first holiday in the list will be the
 		// next.
+		returnHoliday = Holiday.NEW_YEAR;
+		for (Holiday h : Holiday.values()) {
+			if (h.getMonth() > currentMonth) {
+				return h;
+			} else if (h.getMonth() == currentMonth) {
+				if (h.getDay() > currentDay) {
+					return h;
+				}
+			}
+		}
+
 		return returnHoliday;
 	}
 
