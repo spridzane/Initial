@@ -20,26 +20,42 @@ public class InvoiceManager {
 
 	public Invoice createInvoice(Integer id) {
 		Invoice invoice = null;
-		// TODO Create new Invoice, set its id
+		// Create new Invoice, set its id
+		invoice = new Invoice();
+		invoice.setId(id);
 		// Save invoice object into database
 		persist(invoice);
 		return invoice;
 	}
 
 	public Item createInvoiceItem(Invoice invoice, Integer id, String name, Float price, Integer quantity) {
-		// TODO create new Item, set its properties and save it in database
-		// TODO return reference to the created item
-		return null;
+		// create new Item, set its properties and save it in database
+		// return reference to the created item
+		Item item = new Item();
+		item.setInvoice(invoice);
+		item.setId(id);
+		item.setName(name);
+		item.setPrice(price);
+		item.setCount(quantity);
+		persist(invoice);
+		return item;
 	}
 
 	public Item createItem(Integer id, String name, Float price, Integer quantity) {
-		// TODO create new Item, set its properties and save it in database
+		// create new Item, set its properties and save it in database
 		// and return reference to it
-		return null;
+		Item item = new Item();
+		item.setId(id);
+		item.setName(name);
+		item.setPrice(price);
+		item.setCount(quantity);
+		persist(item);
+		return item;
 	}
 
 	public void addItemToInvoice(Invoice invoice, Item item) {
-		// TODO add passed item to the passed invoice
+		// add passed item to the passed invoice
+		invoice.addItem(item);
 	}
 
 	public void persist(Object o) {
@@ -60,8 +76,8 @@ public class InvoiceManager {
 	}
 
 	public Item searchItem(Integer id) {
-		// TODO search item in database and return reference to it
-		return null;
+		// search item in database and return reference to it
+		return em.find(Item.class, id);
 	}
 
 	public void clearData() {
