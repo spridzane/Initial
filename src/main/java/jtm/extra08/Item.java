@@ -19,6 +19,7 @@ public class Item {
 	@ManyToOne
 	@JoinColumn
 	private Invoice invoice;
+	
 	private String name;
 	private Integer count;
 	private Float price;
@@ -45,6 +46,7 @@ public class Item {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
+		invoice.addItem(this);
 	}
 
 	public String getName() {

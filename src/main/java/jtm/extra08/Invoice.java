@@ -70,7 +70,9 @@ public class Invoice {
 	@PrePersist
 	protected void onPrePersist() {
 		// set date field to current system date
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
 		date = new Date();
+		df.format(date);
 
 	}
 

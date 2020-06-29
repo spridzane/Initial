@@ -37,7 +37,7 @@ public class InvoiceManager {
 		item.setName(name);
 		item.setPrice(price);
 		item.setCount(quantity);
-		persist(invoice);
+		persist(item);
 		return item;
 	}
 
