@@ -28,11 +28,11 @@ public class TeacherManager {
 		// for tests need to be executed server-wise, not just database-wise.
 		// 2. Set AutoCommit to false and use conn.commit() where necessary in
 		// other methods
-
 		if (conn == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				conn = DriverManager.getConnection("jdbc:mysql://localhost/?autoReconnect=true&useSSL=false", "root",
+				conn = DriverManager.getConnection(
+						"jdbc:mysql://localhost/?autoReconnect=true&useSSL=false&characterEncoding=utf8", "root",
 						"Student007");
 				conn.setAutoCommit(false);
 			} catch (Exception e) {
@@ -56,24 +56,21 @@ public class TeacherManager {
 		// use full notation for table "database_activity.Teacher"
 
 		Teacher teacher = new Teacher(0, null, null);
-
 		try {
-			conn.setAutoCommit(false);
 			PreparedStatement pStmnt = null;
 			pStmnt = conn.prepareStatement("SELECT * FROM database_activity.teacher where id = ?");
 			pStmnt.setInt(1, id);
 			conn.commit();
 			ResultSet rs = pStmnt.executeQuery();
-			if (rs.next()) {
+			if (rs.next())
 				teacher = new Teacher(rs.getInt(1), rs.getString(2), rs.getString(3));
-			}
+			return teacher;
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			log.debug(e.getMessage());
 		}
-
 		return teacher;
+
 	}
 
 	/**
@@ -84,6 +81,7 @@ public class TeacherManager {
 	 * @param lastName  the last name of teacher.
 	 * @return a list of Teacher object.
 	 */
+
 	public List<Teacher> findTeacher(String firstName, String lastName) {
 		// TODO #3 Write an sql statement that searches teacher by first and
 		// last name and returns results as ArrayList<Teacher>.
@@ -92,6 +90,7 @@ public class TeacherManager {
 		// Note, that if nothing is found return empty list!
 		List<Teacher> list = new ArrayList<>();
 		PreparedStatement pStmnt;
+
 		try {
 			conn.setAutoCommit(false);
 			pStmnt = conn.prepareStatement(
@@ -104,9 +103,10 @@ public class TeacherManager {
 				Teacher teacher = new Teacher(rs.getInt(1), rs.getString(2), rs.getString(3));
 				list.add(teacher);
 			}
+			rs.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.debug(e.getMessage());
 		}
 
 		return list;
@@ -124,24 +124,20 @@ public class TeacherManager {
 	public boolean insertTeacher(String firstName, String lastName) {
 		// #4 Write an sql statement that inserts teacher in database.
 		try {
-			conn.setAutoCommit(false);
+
 			PreparedStatement pStmnt = conn
 					.prepareStatement("INSERT INTO database_activity.teacher (firstname, lastname) VALUES (?, ?)");
 			pStmnt.setString(1, firstName);
 			pStmnt.setString(2, lastName);
-			int a = pStmnt.executeUpdate();
-
-			if (a == 1) {
-				conn.commit();
-				return true;
-			}
+			pStmnt.executeUpdate();
+			conn.commit();
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			log.debug(e.getMessage());
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -152,26 +148,27 @@ public class TeacherManager {
 	 */
 	public boolean insertTeacher(Teacher teacher) {
 		// #5 Write an sql statement that inserts teacher in database.
-
+		boolean status = false;
 		try {
-			conn.setAutoCommit(false);
 			PreparedStatement pStmnt = conn.prepareStatement(
 					"INSERT INTO database_activity.teacher (id, firstname, lastname) VALUES (?, ?, ?)");
-			pStmnt.setInt(1, teacher.getId());
+			pStmnt.setString(1, Integer.toString(teacher.getId()));
 			pStmnt.setString(2, teacher.getFirstName());
 			pStmnt.setString(3, teacher.getLastName());
 
-			int a = pStmnt.executeUpdate();
-			if (a == 1) {
-				conn.commit();
-				return true;
+			int rows = pStmnt.executeUpdate();
+			conn.commit();
+			if (rows == 1) {
+
+				status = true;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.debug(e.getMessage());
+			status = false;
 		}
 
-		return false;
+		return status;
 	}
 
 	/**
@@ -182,13 +179,12 @@ public class TeacherManager {
 	 * @return true if row was updated.
 	 */
 	public boolean updateTeacher(Teacher teacher) {
-		boolean status = false;
 		// #6 Write an sql statement that updates teacher information.
-		PreparedStatement pStmnt;
+		boolean status = false;
 
 		try {
-			conn.setAutoCommit(false);
-			pStmnt = conn
+
+			PreparedStatement pStmnt = conn
 					.prepareStatement("UPDATE database_activity.teacher SET firstname = ?, lastname = ? where id = ? ");
 
 			pStmnt.setString(1, teacher.getFirstName());
@@ -196,18 +192,21 @@ public class TeacherManager {
 
 			pStmnt.setInt(3, teacher.getId());
 
-			int a = pStmnt.executeUpdate();
-			if (a == 1) {
-				conn.commit();
+			int rows = pStmnt.executeUpdate();
+			conn.commit();
+			pStmnt.close();
+			if (rows == 1) {
+
 				status = true;
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
-			e.printStackTrace();
+			log.debug(e.getMessage());
+			status = false;
 		}
 		return status;
-//		return false;
+
 	}
 
 	/**
@@ -231,8 +230,8 @@ public class TeacherManager {
 			}
 
 		} catch (SQLException e) {
+			log.debug(e.getMessage());
 
-			e.printStackTrace();
 		}
 
 		return false;
@@ -248,7 +247,7 @@ public class TeacherManager {
 			conn = null;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.debug(e.getMessage());
 		}
 
 	}
